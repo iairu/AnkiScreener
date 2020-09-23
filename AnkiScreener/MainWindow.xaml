@@ -35,7 +35,7 @@
             ESC - Close<LineBreak/>
             Enter - Confirm
         </TextBlock>
-        <Label x:Name="appendState" Content="OFF" Foreground="Yellow" Margin="205,100,0,0"/>
+        <Label x:Name="appendState" Content="OFF" Foreground="Yellow" Margin="205,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Grid
 			x:Name="selectionContainer"
 		>
