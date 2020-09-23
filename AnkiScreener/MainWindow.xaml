@@ -1,0 +1,54 @@
+﻿<Window x:Class="AnkiScreener.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnkiScreener"
+        mc:Ignorable="d"
+        Title="AnkiScreener Selection Overlay" 
+		KeyDown="eKeyDown"
+		MouseDown="eMouseDown"
+		MouseUp="eMouseUp"
+		MouseMove="eMouseMove" 
+		Background="Transparent"
+		AllowsTransparency="True"
+		Width="800" Height="449"
+		WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen"
+		>
+	<Grid
+		Background="#01FFFFFF"
+		>
+		<Border 
+			Background="Transparent"
+			BorderBrush="Yellow"
+			BorderThickness="5"
+		/>
+		
+		<Grid
+			x:Name="selectionContainer"
+		>
+			<Border
+			x:Name="defaultDragSelection"
+			Background="Transparent"
+			BorderBrush="Red"
+			BorderThickness="2"
+			Width="0" Height="0"
+			HorizontalAlignment="Left" VerticalAlignment="Top"
+			Margin="0,0,0,0"
+			/> 
+		</Grid>
+		<Grid
+			x:Name="groupContainer"
+		>
+			<Border
+			x:Name="defaultDragGroup"
+			Background="Transparent"
+			BorderBrush="Blue"
+			BorderThickness="2"
+			Width="0" Height="0"
+			HorizontalAlignment="Left" VerticalAlignment="Top"
+			Margin="0,0,0,0"
+			/>
+		</Grid>
+	</Grid>
+</Window>
