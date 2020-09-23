@@ -89,6 +89,7 @@ namespace AnkiScreener
                 case Key.Escape:    Close();                    break;
                 case Key.X:         removeLastSelection();      break;
                 case Key.C:         removeLastGroup();          break;
+                case Key.A:         toggleAppendState();        break;
                 case Key.F1:        printDrags();               break;
 
                 default: break;
@@ -135,6 +136,10 @@ namespace AnkiScreener
                 groupContainer.Children.RemoveAt(groupContainer.Children.Count - 1);
                 groups.RemoveAt(groups.Count - 1);
             }
+        }
+        private void toggleAppendState()
+        {
+            appendState.Content = (appendState.Content.ToString() == "OFF") ? "ON" : "OFF";
         }
     }
 }

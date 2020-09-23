@@ -18,13 +18,25 @@
 	<Grid
 		Background="#01FFFFFF"
 		>
-		<Border 
+        <Border 
 			Background="Transparent"
 			BorderBrush="Yellow"
 			BorderThickness="5"
-		/>
-		
-		<Grid
+		>
+        </Border>
+        <TextBlock x:Name="helpText" TextWrapping="Wrap" Foreground="#FFF3FF00" Background="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10" FontWeight="Bold" FontSize="14">
+			LMB - Create selection<LineBreak/>
+            X - Cancel last selection<LineBreak/>
+            <LineBreak/>
+            RMB - Create group<LineBreak/>
+            C - Cancel last group<LineBreak/>
+            <LineBreak/>
+            A - Append to last CSV toggle ____<LineBreak/>
+            ESC - Close<LineBreak/>
+            Enter - Confirm
+        </TextBlock>
+        <Label x:Name="appendState" Content="OFF" Foreground="Yellow" Margin="205,100,0,0"/>
+        <Grid
 			x:Name="selectionContainer"
 		>
 			<Border

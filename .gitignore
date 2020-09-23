@@ -1,3 +1,6 @@
 /.vs
 bin/**
 Debug/**
+.vs
+AnkiScreener/bin
+AnkiScreener/obj/Debug
