@@ -1,0 +1,33 @@
+SettingReader class:
+    constructor(settings.ini path)
+    
+    private exist()     checks if settings.ini exists
+    private create()    creates settings.ini file
+    public loadFile()   loads settings.ini file that contains output folder path
+                        uses exist() and create() to guarantee file availability
+    public getValue(key)   gets the value for given key to memory only
+    public setValue(key)   sets the value for given key to memory only
+    public saveFile()   saves changes from memory to settings.ini
+    
+    
+
+Screenshotter class:
+    imports jpg lib
+    imports screengrabbing lib
+    
+    grabJPG(x1,y1,x2,y2)    returns jpg file data for the given screen region
+    
+    
+
+CSVSaver class:
+    constructor(output path (obtained using SettingReader instance))
+    
+    private getLastCSV() returns -1 if none else path
+    
+    public append management enums: CSVSaver.Append, CSVSaver.Overwrite
+    public save(2d list of rows x columns of text, append enum)
+    
+    
+    
+Refactor:
+    - move the rectangle selection / drag to a separate class
