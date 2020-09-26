@@ -4,7 +4,8 @@
     "description": "",
     "main": "src/electron.js",
     "scripts": {
-        "dev": "concurrently \"npm:svelte-dev\" \"npm:start\"",
+        "dev": "node concurrently.js -bg",
+        "dev-once": "node concurrently.js",
         "start": "electron .",
         "start-alt": "electron-forge start",
         "svelte-dev": "rollup -c -w",
