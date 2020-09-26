@@ -1,0 +1,19 @@
+{
+  "name": "ankiscreener",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "image-clipper": "^0.4.4",
+    "screenshot-desktop": "^1.12.2"
+  },
+  "devDependencies": {
+    "electron": "^10.1.2",
+    "electron-reloader": "^1.0.1"
+  }
+}
