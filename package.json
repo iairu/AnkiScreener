@@ -2,7 +2,7 @@
     "name": "ankiscreener",
     "version": "1.0.0",
     "description": "",
-    "main": "src/index.js",
+    "main": "src/electron.js",
     "scripts": {
         "dev": "concurrently \"npm:svelte-dev\" \"npm:start\"",
         "start": "electron .",
