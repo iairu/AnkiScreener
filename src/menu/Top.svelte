@@ -1,13 +1,15 @@
 <script>
-    import { exitApp } from "../controller";
+    import { exitApp, NYI, devTools, restartApp } from "../controller";
 
 </script>
 
 <div id="top">
-    <button name="close" aria-label="Close" on:click={exitApp}>X</button>
-    <button name="activeFolder" aria-label="Active Folder">Folder</button>
-    <button name="toggleCaptureKey" aria-label="Toggle Capture Key">F8</button>
-    <button name="hideCapturing" aria-label="Hide additional info">/\</button>
+    <button aria-label="Exit the app" on:click={exitApp}>X</button>
+    <button aria-label="Choose active folder" on:click={NYI}>Folder</button>
+    <button aria-label="Toggle capture mode" on:click={NYI}>F8</button>
+    <button aria-label="Hide additional info" on:click={NYI}>/\</button>
+    <button aria-label="Launch dev tools" on:click={devTools}>DT</button>
+    <button aria-label="Restart the app" on:click={restartApp}>R</button>
 </div>
 
 <style lang="scss">
