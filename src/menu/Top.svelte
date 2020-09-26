@@ -1,8 +1,10 @@
 <script>
+    import { exitApp } from "../controller";
+
 </script>
 
 <div id="top">
-    <button name="close" aria-label="Close">X</button>
+    <button name="close" aria-label="Close" on:click={exitApp}>X</button>
     <button name="activeFolder" aria-label="Active Folder">Folder</button>
     <button name="toggleCaptureKey" aria-label="Toggle Capture Key">F8</button>
     <button name="hideCapturing" aria-label="Hide additional info">/\</button>

@@ -5,11 +5,6 @@ require('electron-reload')(__dirname, {
   awaitWriteFinish: true,
 });
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
-}
-
 const createWindow = () => {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -18,6 +13,7 @@ const createWindow = () => {
     frame: false,
     transparent: true,
     fullscreen: true,
+    alwaysOnTop: true,
     webPreferences: {
         nodeIntegration: true
     }
