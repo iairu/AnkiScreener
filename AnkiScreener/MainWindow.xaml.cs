@@ -22,6 +22,7 @@ namespace AnkiScreener
     /// </summary>
     public partial class MainWindow : Window
     {
+        Helpers h = new Helpers(); // todo
         MouseButton ActiveMouseBtn = MouseButton.XButton1; // Currently selecting using this button, default to unused XButton1 if not
         Point downPoint; // Selection start point
         Point movingPoint; // Selection end point
