@@ -1,46 +1,43 @@
 <script>
-
+	import Top from './menu/Top.svelte';
+	import Groups from './menu/Groups.svelte';
+	import KeybindToggles from './menu/KeybindToggles.svelte';
+	import Keybinds from './menu/Keybinds.svelte';
 </script>
 
 <menu>
 	<div class="always">
-		<button name="close" aria-label="Close">X</button>
-		<button name="activeFolder" aria-label="Active Folder">Folder</button>
-		<button name="toggleCaptureKey" aria-label="Toggle Capture Key">F8</button>
-		<button name="hideCapturing" aria-label="Hide additional info">/\</button>
+		<Top />
 	</div>
 	<div class="capturing">
-		<div class="groups">
-			<div class="group" id="group_1">
-				<label for="groupAfixes">GroupName (1)</label>
-				<button class="toggleGroupSettings">/\</button>
-				<div class="settings">
-					<input type="text" name="groupAfixes" id="group_1_afixes" placeholder="Prefix #IMG# Suffix">
-				</div>
-			</div>
-		</div>
-		<div class="keybindToggles">
-			<div class="toggle" id="toggle_append">
-				<label for="toggle_state"><b>A</b>ppend to</label>
-				<input type="checkbox" name="toggle_state" id="toggle_append_state">
-				<div class="details">somethingsomething.csv</div>
-			</div>
-		</div>
-		<div class="keybinds">
-			<div class="keybind" id="keybind_addSelection">
-				<img src="" alt="Keybind Icon" class="icon">
-				<label for="keybind">Add selection</label>
-			</div>
-		</div>
+		<!-- <Groups />
+		<KeybindToggles />
+		<Keybinds /> -->
 	</div>
 </menu>
 
-<style>
-	menu {
-		display: inline-block;
-		padding: 0;
-		margin: 0;
-		border: 1px solid black;
-		border-radius: 15px;
+<style lang="scss">
+menu {
+	display: inline-block;
+	padding: 0;
+	margin: 15px 0 0 15px;
+	border: 1px solid black;
+	border-radius: 15px;
+	background: rgb(38, 142, 161);
+	overflow: hidden;
+	:global(button) {
+		background: transparent;
+		border: 1px solid rgba(0, 0, 0, 0.493);
+		box-shadow: inset 0px 0px 0px 1px rgba(255,255,255,0.2);
+		border-radius: 5px;
+		color: white;
+		outline: none;
+		cursor: pointer;
+		&:hover {background: rgba(255,255,255,0.2);}
+		&:active {background: rgba(0,0,0,0.2);}
+		&:focus {
+			box-shadow: inset 0px 0px 0px 1px rgba(255,255,255,0.5);
+		}
 	}
+}
 </style>
