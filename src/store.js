@@ -5,7 +5,10 @@ const DEV = true;
 export const isDev = readable(DEV);
 export const isCapturing = writable(false);
 export const startCapturing = ()=>{isCapturing.set(true)}
-export const stopCapturing = ()=>{isCapturing.set(false)}
+export const stopCapturing = ()=>{
+    isCapturing.set(false);
+    resetSelections();
+}
 export const isHidden = writable(false);
 export const hide = ()=>{isHidden.set(true)}
 export const show = ()=>{isHidden.set(false)}
@@ -33,9 +36,10 @@ export const removeLastSelection = (isGroup)=>{
         return w;
     })
 }
-export const resetSelections = (isGroup)=>{
-    const option = (isGroup) ? groups : shots;
-    option.set([]);
+export const resetSelections = ()=>{
+    groups.set([]);
+    shots.set([]);
+}
 }
 
 export const tags = writable("some, tags");
