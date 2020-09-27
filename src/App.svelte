@@ -4,6 +4,7 @@
 	import Groups from './menu/Groups.svelte';
 	import Tags from './menu/Tags.svelte';
 	import Keybinds from './menu/Keybinds.svelte';
+	import Canvas from './menu/Canvas.svelte';
 </script>
 
 <style lang="scss" global>
@@ -20,3 +21,7 @@
 	</div>
 	{/if}
 </menu>
+
+{#if $isCapturing}
+	<Canvas />
+{/if}

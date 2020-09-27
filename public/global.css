@@ -1,6 +1,11 @@
 html, body {
 	padding: 0;
 	margin: 0;
+	overflow: hidden;
 }
-body {background: transparent;}
+body {
+	background: transparent;
+	height: 100vh;
+	width: 100vw;
+}
 .dev {background: rgb(228, 77, 77) !important;}
