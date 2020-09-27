@@ -5,6 +5,15 @@
 	import Tags from './menu/Tags.svelte';
 	import Keybinds from './menu/Keybinds.svelte';
 	import Canvas from './menu/Canvas.svelte';
+	import { registerGlobalKeybinds, unregisterGlobalKeybinds } from './controller.js';
+	import { onMount } from 'svelte';
+
+	onMount(()=>{
+		registerGlobalKeybinds();
+		return ()=>{
+			unregisterGlobalKeybinds();
+		};
+	});
 </script>
 
 <style lang="scss" global>

@@ -14,7 +14,7 @@
     </button>
 
 {#if !$isCapturing}
-    <button aria-label="Start capturing" on:click={startCapturing}>F8</button>
+    <button aria-label="Start capturing" on:click={startCapturing}>TAB</button>
 {:else}
     <button aria-label="Stop capturing" on:click={stopCapturing}>ESC</button>
     {#if !$isHidden}
