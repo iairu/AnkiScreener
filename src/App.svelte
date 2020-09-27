@@ -11,7 +11,6 @@
 	</div>
 	<div class="capturing">
 		<!-- <Groups />
-		<KeybindToggles />
 		<Keybinds /> -->
 	</div>
 </menu>
