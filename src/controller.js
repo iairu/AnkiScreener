@@ -1,5 +1,5 @@
 const { remote } = require("electron");
-const { notifier } = require("node-notifier");
+const notifier = require("node-notifier");
 
 export function restartApp() {
     remote.app.relaunch();
