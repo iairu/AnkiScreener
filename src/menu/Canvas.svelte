@@ -19,6 +19,7 @@
     }
     function stopSelecting(e) {
         isSelecting = false;
+    }
     function handleLocalKeybinds(e) {
         switch(e.key) {
             case "Enter": completeCapture(); break;
