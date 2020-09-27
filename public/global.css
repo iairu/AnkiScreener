@@ -4,6 +4,7 @@ html, body {
 	overflow: hidden;
 }
 body {
+	user-select: none;
 	background: transparent;
 	height: 100vh;
 	width: 100vw;
