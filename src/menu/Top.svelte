@@ -1,5 +1,5 @@
 <script>
-    import { exitApp, NYI, devTools, restartApp } from "../controller";
+    import { exitApp, devTools, restartApp } from "../controller";
     import { isDev, 
              isCapturing, startCapturing, stopCapturing,
              isHidden, hide, show,
