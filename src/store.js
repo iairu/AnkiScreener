@@ -68,6 +68,15 @@ export const assignSelections = ()=>{
 
     return [_groups,_shots];
 }
+export const modifySelection = (isGroup,i,mergeObj)=>{
+    const option = (isGroup) ? groups : shots;
+    option.update(w=>{
+        if (mergeObj.name) w[i].name = mergeObj.name;
+        if (mergeObj.prefix) w[i].prefix = mergeObj.prefix;
+        if (mergeObj.suffix) w[i].suffix = mergeObj.suffix;
+        return w;
+    })
+}
 
 export const tags = writable("some, tags");
 
