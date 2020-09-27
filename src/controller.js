@@ -3,11 +3,12 @@ import { startCapturing, stopCapturing } from "./store";
 
 export function restartApp() {
     remote.app.relaunch();
-    remote.app.exit();
+    exitApp();
 }
 
 export function exitApp() {
-    remote.app.quit();
+    unregisterGlobalKeybinds();
+    remote.app.exit();
 }
 
 export function devTools() {
