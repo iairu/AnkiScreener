@@ -32,29 +32,36 @@
 <svelte:window 
     on:keyup={handleLocalKeybinds}
 />
+
 <cnvs 
     on:mousedown={startSelecting}
     on:mousemove={continueSelecting}
     on:mouseup={stopSelecting}
 >
     <shots>
-        {#each $shots as selection}
+        {#each $shots as s, index}
             <shot style={
-                    "width:" + ((selection[1] - selection[0] > 0) ? selection[1] - selection[0] : 0) + "px;"
-                + " height:" + ((selection[3] - selection[2] > 0) ? selection[3] - selection[2] : 0) + "px;"
-                + " left: "  + selection[0] + "px;"
-                + " top:"    + selection[2] + "px;"
-            } />
+                    "width:" + ((s.x2 - s.x1 > 0) ? s.x2 - s.x1 : 0) + "px;"
+                + " height:" + ((s.y2 - s.y1 > 0) ? s.y2 - s.y1 : 0) + "px;"
+                + " left: "  + s.x1 + "px;"
+                + " top:"    + s.y1 + "px;"
+            }>
+                <label for="shot">{index + 1}</label>
+            </shot>
         {/each}
     </shots>
+
     <groups>
-        {#each $groups as selection}
+        {#each $groups as s, index}
             <group style={
-                    "width:" + ((selection[1] - selection[0] > 0) ? selection[1] - selection[0] : 0) + "px;"
-                + " height:" + ((selection[3] - selection[2] > 0) ? selection[3] - selection[2] : 0) + "px;"
-                + " left: "  + selection[0] + "px;"
-                + " top:"    + selection[2] + "px;"
-            } />
+                    "width:" + ((s.x2 - s.x1 > 0) ? s.x2 - s.x1 : 0) + "px;"
+                + " height:" + ((s.y2 - s.y1 > 0) ? s.y2 - s.y1 : 0) + "px;"
+                + " left: "  + s.x1 + "px;"
+                + " top:"    + s.y1 + "px;"
+            }>
+                <label for="group">{"(" + (index + 1) + ") " + s.name}</label>
+            </group>
         {/each}
     </groups>
+
 </cnvs>

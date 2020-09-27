@@ -18,14 +18,25 @@ export const shots = writable([]);
 
 export const createSelection = (isGroup, x1, x2, y1, y2)=>{
     const option = (isGroup) ? groups : shots;
-    option.update(w=>[...w,[x1, x2, y1, y2, "", "", ""]])
+    // option.update(w=>[...w,[x1, x2, y1, y2, "", "", ""]])
+    option.update(w=>[...w,{
+        x1: x1,
+        x2: x2,
+        y1: y1,
+        y2: y1,
+        name: "",
+        prefix: "",
+        suffix: "",
+        children: [],
+        parent: undefined
+    }])
 }
 export const updateLastSelection = (isGroup, x2, y2)=>{
     const option = (isGroup) ? groups : shots;
     option.update(w=>{
         const l = w.length-1;
-        w[l][1] = x2;
-        w[l][3] = y2;
+        w[l].x2 = x2;
+        w[l].y2 = y2;
         return w;
     })
 }
