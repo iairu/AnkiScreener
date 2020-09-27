@@ -3,7 +3,7 @@ import { readable, writable } from "svelte/store";
 const DEV = true;
 
 export const isDev = readable(DEV);
-export const isCapturing = writable(DEV ? true : false);
+export const isCapturing = writable(false);
 export const startCapturing = ()=>{isCapturing.set(true)}
 export const stopCapturing = ()=>{isCapturing.set(false)}
 export const isHidden = writable(false);
