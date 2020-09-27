@@ -1,5 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
-import preprocess from "svelte-preprocess";
+import autoPreprocess from "svelte-preprocess";
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
@@ -19,12 +19,12 @@ export default {
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,
-			preprocess: preprocess(),
+			preprocess: autoPreprocess(),
 			// we'll extract any component CSS out into
 			// a separate file - better for performance
-			css: css => {
-				css.write('public/build/bundle.css');
-			}
+			// css: css => {
+			// 	css.write('public/build/bundle.css');
+			// }
 		}),
 
 		// If you have external dependencies installed from
