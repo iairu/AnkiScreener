@@ -1,34 +1,32 @@
 <script>
     import { exitApp, NYI, devTools, restartApp } from "../controller";
-
+    import { isDev, 
+             isCapturing, startCapturing, stopCapturing,
+             isHidden, hide, show,
+             csv, setCsv } from "../store";
 </script>
 
-<div id="top">
+<div id="top" class="buttonRow">
     <button aria-label="Exit the app" on:click={exitApp}>X</button>
-    <button aria-label="Choose active folder" on:click={NYI}>Folder</button>
-    <button aria-label="Toggle capture mode" on:click={NYI}>F8</button>
-    <button aria-label="Hide additional info" on:click={NYI}>/\</button>
-    <button aria-label="Launch dev tools" on:click={devTools}>DT</button>
-    <button aria-label="Restart the app" on:click={restartApp}>R</button>
-</div>
+    <button aria-label="Choose a CSV output" on:click={setCsv}
+            style="max-width: 75px; text-overflow: ellipsis; white-space: nowrap;">
+        {$csv ? $csv : "Save to"}
+    </button>
 
-<style lang="scss">
-#top {
-    display: flex;
-    button {
-        margin: 0;
-        padding: 5px 7px;
-        &:not(:first-of-type) {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-left: none;
-        }
-        &:not(:last-of-type) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        &:first-of-type {padding-left: 10px;}
-        &:last-of-type {padding-right: 10px;}
-    }
-}
-</style>
+{#if !$isCapturing}
+    <button aria-label="Start capturing" on:click={startCapturing}>F8</button>
+{:else}
+    <button aria-label="Stop capturing" on:click={stopCapturing}>ESC</button>
+    {#if !$isHidden}
+        <button aria-label="Hide additional info" on:click={hide}>/\</button>
+    {:else}
+        <button aria-label="Show additional info" on:click={show}>\/</button>
+    {/if}
+{/if}
+
+{#if $isDev}
+    <button class="dev" aria-label="Launch dev tools" on:click={devTools}>DT</button>
+    <button class="dev" aria-label="Restart the app" on:click={restartApp}>R</button>
+{/if}
+
+</div>
