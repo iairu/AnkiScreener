@@ -1,5 +1,5 @@
 <script>
-    import { createSelection, updateLastSelection, shots, groups } from "../store";
+    import { createSelection, updateLastSelection, shots, groups, removeLastSelection } from "../store";
 
     let isSelecting = false;
     let isGroup = false;
@@ -18,9 +18,20 @@
     }
     function stopSelecting(e) {
         isSelecting = false;
+    function handleLocalKeybinds(e) {
+        switch(e.key) {
+            case "x": removeLastSelection(false); break;
+            case "X": removeLastSelection(false); break;
+            case "c": removeLastSelection(true); break;
+            case "C": removeLastSelection(true); break;
+            default: break;
+        }
     }
 </script>
 
+<svelte:window 
+    on:keyup={handleLocalKeybinds}
+/>
 <cnvs 
     on:mousedown={startSelecting}
     on:mousemove={continueSelecting}
