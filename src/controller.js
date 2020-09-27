@@ -1,5 +1,5 @@
 const { remote } = require("electron");
-import { startCapturing, stopCapturing } from "./store";
+import { assignSelections, resetSelections, startCapturing, stopCapturing } from "./store";
 
 export function restartApp() {
     remote.app.relaunch();
@@ -14,10 +14,17 @@ export function exitApp() {
 export function devTools() {
     remote.getCurrentWindow().webContents.openDevTools();
 }
+
 export function registerGlobalKeybinds() {
     remote.globalShortcut.register("Tab", startCapturing);
     remote.globalShortcut.register("ESC", stopCapturing);
 }
+
+export function completeCapture() {
+    console.log(assignSelections());
+    resetSelections();
+}
+
 export function unregisterGlobalKeybinds() {
     remote.globalShortcut.unregisterAll();
 }

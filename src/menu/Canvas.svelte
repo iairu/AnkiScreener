@@ -1,5 +1,6 @@
 <script>
     import { createSelection, updateLastSelection, shots, groups, removeLastSelection } from "../store";
+    import { completeCapture } from "../controller";
 
     let isSelecting = false;
     let isGroup = false;
@@ -20,6 +21,7 @@
         isSelecting = false;
     function handleLocalKeybinds(e) {
         switch(e.key) {
+            case "Enter": completeCapture(); break;
             case "x": removeLastSelection(false); break;
             case "X": removeLastSelection(false); break;
             case "c": removeLastSelection(true); break;

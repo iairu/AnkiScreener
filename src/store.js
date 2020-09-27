@@ -51,6 +51,22 @@ export const resetSelections = ()=>{
     groups.set([]);
     shots.set([]);
 }
+export const assignSelections = ()=>{
+    let _groups;
+    let _shots;
+    groups.subscribe(c => _groups = c)(); // () to unsub right afterwards
+    shots.subscribe(c => _shots = c)(); // ^^^
+
+    _groups.forEach((group) => {
+    _shots.forEach((shot) => {
+        if (shot.x1 >= group.x1 && shot.x2 <= group.x2 && shot.y1 >= group.y1 && shot.y2 <= group.y2) {
+            group.children.push(shot);
+            shot.parent = group;
+        }
+    })
+    })
+
+    return [_groups,_shots];
 }
 
 export const tags = writable("some, tags");
