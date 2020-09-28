@@ -1,5 +1,6 @@
 const { remote } = require("electron");
-import { assignSelections, resetSelections, startCapturing, stopCapturing } from "./store";
+import { readTextFile } from "./fsman";
+import { assignSelections, startCapturing, stopCapturing } from "./store";
 
 export function restartApp() {
     remote.app.relaunch();
@@ -20,9 +21,15 @@ export function registerGlobalKeybinds() {
     remote.globalShortcut.register("ESC", stopCapturing);
 }
 
-export function completeCapture() {
+export async function setSavePathDialog() {
+    return remote.dialog.showSaveDialog(remote.getCurrentWindow(),{}).then(result=>{return result.filePath;});
+}
+
+export async function completeCapture() {
     console.log(assignSelections());
-    resetSelections();
+    // helloWorld();
+    console.log(readTextFile(await setSavePathDialog()));
+    stopCapturing();
 }
 
 export function unregisterGlobalKeybinds() {
