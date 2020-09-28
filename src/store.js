@@ -12,6 +12,9 @@ export const stopCapturing = ()=>{
 export const isHidden = writable(false);
 export const hide = ()=>{isHidden.set(true)}
 export const show = ()=>{isHidden.set(false)}
+export const isScreenshotting = writable(false);
+export const screenshotStart = ()=>{isScreenshotting.set(true);}
+export const screenshotDone = ()=>{isScreenshotting.set(false);}
 
 export const groups = writable([]);
 export const shots = writable([]);

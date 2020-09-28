@@ -1,6 +1,7 @@
 const { remote } = require("electron");
+const screenshot = require("screenshot-desktop");
 import { readTextFile } from "./fsman";
-import { assignSelections, startCapturing, stopCapturing } from "./store";
+import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing } from "./store";
 
 export function restartApp() {
     remote.app.relaunch();
@@ -30,6 +31,15 @@ export async function completeCapture() {
     // helloWorld();
     console.log(readTextFile(await setSavePathDialog()));
     stopCapturing();
+}
+
+export async function captureScreenshot() {
+    // base64 image/jpeg
+    screenshotStart();
+    return await screenshot().then(imgBuffer => {
+        screenshotDone();
+        return imgBuffer.toString("base64");
+    });
 }
 
 export function unregisterGlobalKeybinds() {
