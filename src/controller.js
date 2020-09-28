@@ -26,9 +26,8 @@ export async function setSavePathDialog() {
     return remote.dialog.showSaveDialog(remote.getCurrentWindow(),{}).then(result=>{return result.filePath;});
 }
 
-export async function completeCapture() {
+export async function exportSelections() {
     console.log(assignSelections());
-    // helloWorld();
     console.log(readTextFile(await setSavePathDialog()));
     stopCapturing();
 }

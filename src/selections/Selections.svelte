@@ -1,16 +1,14 @@
 <script>
-    import { createSelection, updateLastSelection, shots, groups, removeLastSelection } from "../store";
-    import { completeCapture } from "../controller";
+    import { createSelection, updateLastSelection, removeLastSelection, shots, groups } from "../store";
+    import { exportSelections } from "../controller";
 
     let isSelecting = false;
     let isGroup = false;
 
     function startSelecting(e) {
-        // if (!["GROUP","SHOT"].includes(e.path[0].tagName)) {
-            isSelecting = true;
-            isGroup = e.button == 2 ? true : false;
-            createSelection(isGroup, e.x, e.x, e.y, e.y);
-        // }
+        isSelecting = true;
+        isGroup = e.button == 2 ? true : false;
+        createSelection(isGroup, e.x, e.x, e.y, e.y);
     }
     function continueSelecting(e) {
         if (isSelecting) {
@@ -20,10 +18,11 @@
     function stopSelecting(e) {
         isSelecting = false;
     }
+
     function handleLocalKeybinds(e) {
         switch(e.key) {
-            case "Enter": completeCapture(); break;
-            case "x": removeLastSelection(false); break;
+            case "Enter": exportSelections(); break;
+            case "x": removeLastSelection(false); break; // todo: don't allow when <menu> is active (c/x cant be written in input boxes)
             case "X": removeLastSelection(false); break;
             case "c": removeLastSelection(true); break;
             case "C": removeLastSelection(true); break;
@@ -36,7 +35,7 @@
     on:keyup={handleLocalKeybinds}
 />
 
-<cnvs 
+<selections 
     on:mousedown={startSelecting}
     on:mousemove={continueSelecting}
     on:mouseup={stopSelecting}
@@ -67,4 +66,4 @@
         {/each}
     </groups>
 
-</cnvs>
+</selections>
