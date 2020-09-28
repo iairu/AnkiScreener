@@ -8,8 +8,8 @@
 	import Tags from './menu/Tags.svelte';
 	import Keybinds from './menu/Keybinds.svelte';
 	
-	import Selections from './selections/Selections.svelte';
-	import Screenshot from './selections/Screenshot.svelte';
+	import Selections from './canvas/Selections.svelte';
+	import Screenshot from './canvas/Screenshot.svelte';
 
 	onMount(()=>{
 		registerGlobalKeybinds();
