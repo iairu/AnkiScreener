@@ -3,6 +3,10 @@ const screenshot = require("screenshot-desktop");
 import { readTextFile } from "./fsman";
 import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing } from "./store";
 
+
+
+// APP MANAGEMENT (restartApp, exitApp, devTools)
+
 export function restartApp() {
     remote.app.relaunch();
     exitApp();
@@ -17,10 +21,22 @@ export function devTools() {
     remote.getCurrentWindow().webContents.openDevTools();
 }
 
+
+
+// GLOBAL KEYBINDS (register, unregister)
+
 export function registerGlobalKeybinds() {
     remote.globalShortcut.register("Tab", startCapturing);
     remote.globalShortcut.register("ESC", stopCapturing);
 }
+
+export function unregisterGlobalKeybinds() {
+    remote.globalShortcut.unregisterAll();
+}
+
+
+
+// EXPORT (saveDialog, exportSelections, captureScreenshot)
 
 export async function setSavePathDialog() {
     return remote.dialog.showSaveDialog(remote.getCurrentWindow(),{}).then(result=>{return result.filePath;});
@@ -39,8 +55,4 @@ export async function captureScreenshot() {
         screenshotDone();
         return imgBuffer.toString("base64");
     });
-}
-
-export function unregisterGlobalKeybinds() {
-    remote.globalShortcut.unregisterAll();
 }
