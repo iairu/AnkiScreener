@@ -2,7 +2,7 @@
     import { exitApp, devTools, restartApp } from "../controller";
     import { isDev, 
              isCapturing, startCapturing, stopCapturing,
-             isHidden, hide, show,
+             hasMenuHidden, hideMenu, showMenu,
              csv, setCsv } from "../store";
 </script>
 
@@ -17,10 +17,10 @@
     <button aria-label="Start capturing" on:click={startCapturing}>TAB</button>
 {:else}
     <button aria-label="Stop capturing" on:click={stopCapturing}>ESC</button>
-    {#if !$isHidden}
-        <button aria-label="Hide additional info" on:click={hide}>/\</button>
+    {#if !$hasMenuHidden}
+        <button aria-label="Hide additional info" on:click={hideMenu}>/\</button>
     {:else}
-        <button aria-label="Show additional info" on:click={show}>\/</button>
+        <button aria-label="Show additional info" on:click={showMenu}>\/</button>
     {/if}
 {/if}
 

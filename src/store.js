@@ -9,9 +9,11 @@ export const stopCapturing = ()=>{
     isCapturing.set(false);
     resetSelections();
 }
-export const isHidden = writable(false);
-export const hide = ()=>{isHidden.set(true)}
-export const show = ()=>{isHidden.set(false)}
+
+export const hasMenuHidden = writable(false);
+export const hideMenu = ()=>{hasMenuHidden.set(true)}
+export const showMenu = ()=>{hasMenuHidden.set(false)}
+
 export const isScreenshotting = writable(false);
 export const screenshotStart = ()=>{isScreenshotting.set(true);}
 export const screenshotDone = ()=>{isScreenshotting.set(false);}

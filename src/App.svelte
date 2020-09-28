@@ -1,5 +1,5 @@
 <script>
-	import { isCapturing, isHidden, isScreenshotting } from './store.js';
+	import { isCapturing, hasMenuHidden, isScreenshotting } from './store.js';
 	import { registerGlobalKeybinds, unregisterGlobalKeybinds } from './controller.js';
 	import { onMount } from 'svelte';
 	
@@ -26,7 +26,7 @@
 {#if !$isScreenshotting}
 	<menu>
 		<Top />
-		{#if $isCapturing && !$isHidden}
+		{#if $isCapturing && !$hasMenuHidden}
 		<div class="capturing">
 			<Groups />
 			<Tags />
