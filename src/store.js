@@ -18,6 +18,15 @@ export const isScreenshotting = writable(false);
 export const screenshotStart = ()=>{isScreenshotting.set(true);}
 export const screenshotDone = ()=>{isScreenshotting.set(false);}
 
+export const tags = writable("some, tags");
+export const csvPath = writable("");
+export const setCsvPath = (path)=>{csvPath.set(path);}
+export const getCsvPath = ()=>{
+    let path = "";
+    csvPath.subscribe(p => {path = p})(); // unsub right after
+    return path;
+}
+
 export const groups = writable([]);
 export const shots = writable([]);
 
@@ -64,14 +73,15 @@ export const assignSelections = ()=>{
 
     _groups.forEach((group) => {
     _shots.forEach((shot) => {
-        if (shot.x1 >= group.x1 && shot.x2 <= group.x2 && shot.y1 >= group.y1 && shot.y2 <= group.y2) {
+        if (shot.x1 >= group.x1 && shot.x2 <= group.x2 && 
+            shot.y1 >= group.y1 && shot.y2 <= group.y2) {
             group.children.push(shot);
             shot.parent = group;
         }
     })
     })
 
-    return [_groups,_shots];
+    return {groups: _groups, shots: _shots};
 }
 export const modifySelection = (isGroup,i,mergeObj)=>{
     const option = (isGroup) ? groups : shots;
@@ -81,13 +91,4 @@ export const modifySelection = (isGroup,i,mergeObj)=>{
         if (mergeObj.suffix) w[i].suffix = mergeObj.suffix;
         return w;
     })
-}
-
-export const tags = writable("some, tags");
-
-export const csv = writable("");
-export const csvExists = writable(false);
-export const setCsv = ()=>{
-    csv.set("Placeholder")
-    // if (fileexists) csvExists.set(true);
 }

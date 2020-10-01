@@ -1,16 +1,16 @@
 <script>
-    import { exitApp, devTools, restartApp } from "../controller";
+    import { exitApp, devTools, restartApp, setSavePath } from "../controller";
     import { isDev, 
              isCapturing, startCapturing, stopCapturing,
              hasMenuHidden, hideMenu, showMenu,
-             csv, setCsv } from "../store";
+             csvPath } from "../store";
 </script>
 
 <div id="top" class="buttonRow">
     <button aria-label="Exit the app" on:click={exitApp}>X</button>
-    <button aria-label="Choose a CSV output" on:click={setCsv}
+    <button aria-label="Choose a CSV output" on:click={setSavePath}
             style="max-width: 75px; text-overflow: ellipsis; white-space: nowrap;">
-        {$csv ? $csv : "Save to"}
+        {$csvPath ? $csvPath : "Save to"}
     </button>
 
 {#if !$isCapturing}
