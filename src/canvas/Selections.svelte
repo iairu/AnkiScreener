@@ -21,7 +21,7 @@
 
     function handleLocalKeybinds(e) {
         switch(e.key) {
-            case "Enter": exportSelections(); break;
+            case "Enter": exportSelections(); break; // todo: only if non button is in focus
             case "x": removeLastSelection(false); break; // todo: don't allow when <menu> is active (c/x cant be written in input boxes)
             case "X": removeLastSelection(false); break;
             case "c": removeLastSelection(true); break;

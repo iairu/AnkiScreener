@@ -10,6 +10,7 @@
 {#each $groups as group, i}
     <details class="group">
         <summary>
+            <!-- todo: Spacebar is triggering both the character and details rollup/down toggle -->
             <input type="text" key={i} placeholder={"Group " + (i + 1)} value={group.name} on:input={handleGroupName}>
         </summary>
         <div>

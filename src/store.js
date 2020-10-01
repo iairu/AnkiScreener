@@ -43,6 +43,7 @@ export const createSelection = (isGroup, x1, x2, y1, y2)=>{
         suffix: "",
         children: [],
         parent: undefined
+        // add b64jpg property here
     }])
 }
 export const updateLastSelection = (isGroup, x2, y2)=>{
@@ -79,7 +80,7 @@ export const assignSelections = ()=>{
             shot.parent = group;
         }
     })
-    })
+    }) // todo: there may be a problem with groups not being in order
 
     return {groups: _groups, shots: _shots};
 }
