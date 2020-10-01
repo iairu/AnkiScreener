@@ -1,6 +1,6 @@
 const { remote } = require("electron");
 const screenshot = require("screenshot-desktop");
-import { readTextFile } from "./fsman";
+import { guaranteeNewLine, readTextFile } from "./fsman";
 import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath } from "./store";
 
 
@@ -40,7 +40,12 @@ export function unregisterGlobalKeybinds() {
 
 export async function setSavePath() {
     let win = remote.getCurrentWindow();
-    remote.dialog.showSaveDialog(win,{})
+    remote.dialog.showSaveDialog(win,{
+        filters: [{
+            name: "Anki CSV",
+            extensions: ["anki.csv"]
+        }]
+    })
     .then(result=>{return result.filePath;})
     .then(path=>{
         if (path !== "") {
@@ -57,24 +62,25 @@ function _alert(text) { // focus lost on main window workaround
 }
 
 export async function exportSelections() {
+    const columnDelimiter = ";";
+    const rowDelimiter = "\r\n";
+
     const { groups } = assignSelections();
-    // let csv = readTextFile(await setSavePathDialog());
-    let csv = "";
-    let maxShots = 0;
 
     let csvPath = getCsvPath();
     if (csvPath === "") {
         _alert("No save path provided.");
         return;
     }
+
+    let csv = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
     
     // figure out how many rows there should be
+    let maxShots = 0;
     groups.forEach(group => {
         maxShots = (group.children.length > maxShots) ? group.children.length : maxShots; 
     })
 
-    const columnDelimiter = ";";
-    const rowDelimiter = "\r\n";
     // each shot defines a row, each group defines a column
     for(let row = 0; row < maxShots; row++) {
         for(let column = 0; column < groups.length; column++) {
