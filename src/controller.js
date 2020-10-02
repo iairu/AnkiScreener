@@ -66,13 +66,6 @@ export async function setSavePath() {
     });
 }
 
-function _alert(text) { // focus lost on main window workaround
-    // let win = remote.getCurrentWindow();
-    // remote.dialog.showMessageBoxSync({message: text});
-    notify(text);
-    // win.focus();
-}
-
 function createCardEntry(prefix,imgPath,suffix) {
     // settings
     return (prefix ? prefix + "<br>" : "") + "<img src=\"" + imgPath + "\">" + (suffix ? "<br>" + suffix : "");
@@ -85,16 +78,16 @@ export async function exportSelections() {
     const { groups, shots } = assignSelections();
     
     if (!shots.length) {
-        _alert("You don't have any selections.\nDrag left mouse button to make some.");
+        notify("You don't have any selections.\nDrag left mouse button to make some.");
         return;
     } else if (!groups.length) {
-        _alert("You don't have any groups.\nDrag right mouse button around selections to make some.");
+        notify("You don't have any groups.\nDrag right mouse button around selections to make some.");
         return;
     }
 
     let csvPath = getCsvPath();
     if (csvPath === "") {
-        _alert("No save path provided.");
+        notify("No save path provided.");
         return;
     }
 
@@ -135,7 +128,7 @@ export async function exportSelections() {
     } 
 
     csv = csv + append;
-    _alert(csv);
+    notify(csv);
 
     stopCapturing();
 }
