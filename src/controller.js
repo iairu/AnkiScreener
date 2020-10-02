@@ -111,8 +111,9 @@ export async function exportSelections() {
         for(let column = 0; column < groups.length; column++) {
             // add the shot into the column number g for row number i if it exists
             if (groups[column].children.length - 1 >= row) {
-                const card = groups[column].children[row];
-                append += createCardEntry(card.prefix, card.b64jpg, card.suffix);
+                append += createCardEntry(groups[column].prefix, groups[column].children[row].b64jpg, groups[column].suffix);
+                // prefix, suffix come from group entry
+                // b64jpg comes from shot entry
             }
 
             // end column if more follow else end row
