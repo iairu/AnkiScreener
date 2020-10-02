@@ -18,7 +18,14 @@ export const isScreenshotting = writable(false);
 export const screenshotStart = ()=>{isScreenshotting.set(true);}
 export const screenshotDone = ()=>{isScreenshotting.set(false);}
 
-export const tags = writable("some, tags");
+export const tags = writable("");
+export const setTags = (_tags)=>{tags.set(_tags);}
+export const getTags = ()=>{
+    let _tags = "";
+    tags.subscribe(t => {_tags = t})(); // unsub right after
+    return _tags;
+}
+
 export const csvPath = writable("");
 export const setCsvPath = (path)=>{csvPath.set(path);}
 export const getCsvPath = ()=>{

@@ -1,7 +1,7 @@
 const { remote } = require("electron");
 const screenshot = require("screenshot-desktop");
 import { guaranteeNewLine, readTextFile } from "./fsman";
-import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath } from "./store";
+import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags } from "./store";
 
 
 
@@ -26,7 +26,7 @@ export function devTools() {
 // GLOBAL KEYBINDS (register, unregister)
 
 export function registerGlobalKeybinds() {
-    remote.globalShortcut.register("Tab", startCapturing);
+    // remote.globalShortcut.register("Tab", startCapturing);
     remote.globalShortcut.register("ESC", stopCapturing);
 }
 
@@ -116,7 +116,14 @@ export async function exportSelections() {
         }
     }
 
-    // todo: add a tag column: append.split(rowDelimiter).forEach(row => row + ";" + tags)
+    // add tags to each row except last empty line
+    let tags = getTags();
+    if (tags !== "") {
+        let arr = append.split(rowDelimiter).map(row => row + columnDelimiter + tags)
+        arr.pop();
+        arr.push("");
+        append = arr.join(rowDelimiter);
+    } 
 
     csv = csv + append;
     _alert(csv);
