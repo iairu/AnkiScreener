@@ -68,7 +68,7 @@ export async function setSavePath() {
 
 function _alert(text) { // focus lost on main window workaround
     let win = remote.getCurrentWindow();
-    alert(text);
+    remote.dialog.showMessageBoxSync(win,{message: text});
     win.focus();
 }
 
