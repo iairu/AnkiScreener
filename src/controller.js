@@ -76,8 +76,15 @@ export async function exportSelections() {
     const columnDelimiter = ";";
     const rowDelimiter = "\r\n";
 
-    const { groups } = assignSelections();
-    // todo: alert if there are no groups or selections
+    const { groups, shots } = assignSelections();
+    
+    if (!shots.length) {
+        _alert("You don't have any selections.\nDrag left mouse button to make some.");
+        return;
+    } else if (!groups.length) {
+        _alert("You don't have any groups.\nDrag right mouse button around selections to make some.");
+        return;
+    }
 
     let csvPath = getCsvPath();
     if (csvPath === "") {
