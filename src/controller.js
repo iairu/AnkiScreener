@@ -51,7 +51,7 @@ export async function captureScreenshot() {
 
 export async function setSavePath() {
     let win = remote.getCurrentWindow();
-    remote.dialog.showSaveDialog({
+    remote.dialog.showSaveDialog(win,{
         filters: [{
             name: "Anki CSV",
             extensions: ["anki.csv"]
