@@ -1,7 +1,7 @@
 const { remote } = require("electron");
 const screenshot = require("screenshot-desktop");
 import { guaranteeNewLine, readTextFile } from "./fsman";
-import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags } from "./store";
+import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify } from "./store";
 
 
 
@@ -67,9 +67,10 @@ export async function setSavePath() {
 }
 
 function _alert(text) { // focus lost on main window workaround
-    let win = remote.getCurrentWindow();
-    remote.dialog.showMessageBoxSync({message: text});
-    win.focus();
+    // let win = remote.getCurrentWindow();
+    // remote.dialog.showMessageBoxSync({message: text});
+    notify(text);
+    // win.focus();
 }
 
 function createCardEntry(prefix,imgPath,suffix) {

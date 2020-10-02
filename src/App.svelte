@@ -11,6 +11,8 @@
 	import Selections from './canvas/Selections.svelte';
 	import Screenshot from './canvas/Screenshot.svelte';
 
+	import Notify from './other/Notify.svelte';
+
 	onMount(()=>{
 		registerGlobalKeybinds();
 		return ()=>{
@@ -38,6 +40,8 @@
 	{#if $isCapturing}
 		<Selections />
 	{/if}
+
+	<Notify />
 {/if}
 
 {#if $isCapturing}

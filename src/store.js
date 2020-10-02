@@ -34,6 +34,22 @@ export const getCsvPath = ()=>{
     return path;
 }
 
+export const notifications = writable([]);
+export const notify = (text, ms=2000)=>{ // settings for default ms
+    notifications.update(n => {
+        const ntf = {
+            text: text,
+            ms: ms,
+            onFinish: ()=>{removeNotification(ntf)}
+        }
+        return [...n,ntf];
+    })
+}
+export const removeNotification = (obj)=>{
+    // can't easily rely on indexes
+    notifications.update(n => n.filter(_n => _n !== obj))
+}
+
 export const groups = writable([]);
 export const shots = writable([]);
 

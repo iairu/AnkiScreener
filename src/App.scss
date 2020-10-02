@@ -94,3 +94,24 @@ img#screenshot {
     bottom: 0;
     overflow: hidden;
 }
+
+notifications { 
+    display: inline-flex;
+    flex-flow: column;
+    align-items: flex-end;
+    position: absolute;
+    margin: 15px 15px 0 0;
+    top: 0;
+    right: 0;
+    z-index: 90;
+    pointer-events: none;
+    note {
+        border: 1px solid rgba(0, 0, 0, 0.493);
+        background: rgb(251, 253, 143);
+        border-radius: 15px;
+        padding: 5px 15px;
+        margin-bottom: 7px;
+        font-family: sans-serif;
+        white-space: pre;
+    }
+}
