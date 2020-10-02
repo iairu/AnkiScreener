@@ -72,9 +72,14 @@ function _alert(text) { // focus lost on main window workaround
     win.focus();
 }
 
+function createCardEntry(prefix,imgPath,suffix) {
+    // settings
+    return (prefix ? prefix + "<br>" : "") + "<img src=\"" + imgPath + "\">" + (suffix ? "<br>" + suffix : "");
+}
+
 export async function exportSelections() {
-    const columnDelimiter = ";";
-    const rowDelimiter = "\r\n";
+    const columnDelimiter = ";"; // settings
+    const rowDelimiter = "\r\n"; // settings
 
     const { groups, shots } = assignSelections();
     
@@ -105,8 +110,10 @@ export async function exportSelections() {
     for(let row = 0; row < maxShots; row++) {
         for(let column = 0; column < groups.length; column++) {
             // add the shot into the column number g for row number i if it exists
-            if (groups[column].children.length - 1 >= row)
-                append += groups[column].children[row].x1; // todo: <img> syntax (children[row].b64jpg)
+            if (groups[column].children.length - 1 >= row) {
+                const card = groups[column].children[row];
+                append += createCardEntry(card.prefix, card.b64jpg, card.suffix);
+            }
 
             // end column if more follow else end row
             if (column < groups.length - 1) 

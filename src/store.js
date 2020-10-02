@@ -49,8 +49,8 @@ export const createSelection = (isGroup, x1, x2, y1, y2)=>{
         prefix: "",
         suffix: "",
         children: [],
-        parent: undefined
-        // add b64jpg property here
+        parent: undefined,
+        b64jpg: ""
     }])
 }
 export const updateLastSelection = (isGroup, x2, y2)=>{
