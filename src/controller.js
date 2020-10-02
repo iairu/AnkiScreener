@@ -51,7 +51,7 @@ export async function captureScreenshot() {
 
 export async function setSavePath() {
     let win = remote.getCurrentWindow();
-    remote.dialog.showSaveDialog(win,{
+    remote.dialog.showSaveDialog({
         filters: [{
             name: "Anki CSV",
             extensions: ["anki.csv"]
@@ -68,7 +68,7 @@ export async function setSavePath() {
 
 function _alert(text) { // focus lost on main window workaround
     let win = remote.getCurrentWindow();
-    remote.dialog.showMessageBoxSync(win,{message: text});
+    remote.dialog.showMessageBoxSync({message: text});
     win.focus();
 }
 
