@@ -110,9 +110,10 @@ export const assignSelections = ()=>{
 export const modifySelection = (isGroup,i,mergeObj)=>{
     const option = (isGroup) ? groups : shots;
     option.update(w=>{
-        if (mergeObj.name) w[i].name = mergeObj.name;
-        if (mergeObj.prefix) w[i].prefix = mergeObj.prefix;
-        if (mergeObj.suffix) w[i].suffix = mergeObj.suffix;
+        if (mergeObj.name !== undefined) w[i].name = mergeObj.name;
+        if (mergeObj.prefix !== undefined) w[i].prefix = mergeObj.prefix;
+        if (mergeObj.suffix !== undefined) w[i].suffix = mergeObj.suffix;
+        if (mergeObj.b64jpg !== undefined) w[i].b64jpg = mergeObj.b64jpg;
         return w;
     })
 }
