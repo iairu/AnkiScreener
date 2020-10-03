@@ -81,7 +81,7 @@ export async function setSavePath() {
 
 function createCardEntry(prefix,imgPath,suffix) {
     // settings
-    return (prefix ? prefix + "<br>" : "") + "<img src=\"" + imgPath + "\">" + (suffix ? "<br>" + suffix : "");
+    return "\"" + (prefix ? prefix + "<br>" : "") + "<img src=\'" + imgPath + "\'>" + (suffix ? "<br>" + suffix : "") + "\"";
 }
 
 export async function exportSelections() {
@@ -143,10 +143,10 @@ export async function exportSelections() {
     // add tags to each row except last empty line
     let tags = getTags();
     if (tags !== "") {
-        let arr = append.split(rowDelimiter).map(row => row + columnDelimiter + tags)
         arr.pop();
         arr.push("");
         append = arr.join(rowDelimiter);
+        let a = append.split(rowDelimiter).map(row => row + columnDelimiter + "\"" + tags + "\"")
     } 
 
     notify((csv.length ? "Appended to" : "Created") + " the CSV table");
