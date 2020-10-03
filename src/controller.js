@@ -27,7 +27,7 @@ export function devTools() {
 // GLOBAL KEYBINDS (register, unregister)
 
 export function registerGlobalKeybinds() {
-    // remote.globalShortcut.register("Tab", startCapturing);
+    remote.globalShortcut.register("Tab", startCapturing);
     remote.globalShortcut.register("ESC", stopCapturing);
 }
 
