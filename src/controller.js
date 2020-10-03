@@ -1,7 +1,7 @@
 const { remote } = require("electron");
 const Screenshot = require("screenshot-desktop");
 const Clipper = require("image-clipper");
-import { guaranteeNewLine, readTextFile } from "./fsman";
+import { guaranteeNewLine, readTextFile, writeTextFile } from "./fsman";
 import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify, getScreenshotElm } from "./store";
 
 
@@ -150,6 +150,7 @@ export async function exportSelections() {
     } 
 
     notify((existingCSV.length ? "Appended to" : "Created") + " the CSV table");
+    writeTextFile(csvPath,existingCSV + appendCSV);
 
     stopCapturing();
 }

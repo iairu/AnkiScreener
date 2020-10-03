@@ -20,6 +20,15 @@ export const readTextFile = (path)=>{
     return contents;
 }
 
+export const writeTextFile = (path,contents)=>{
+    // Write file contents, no checks
+    try {
+        fs.writeFileSync(path,contents);
+    } catch (err) {
+        throw err;
+    }
+}
+
 export const guaranteeNewLine = (text,delimiters=["\r","\n"])=>{ // delimiters should be an array of chars
     // guarantees new line at the end of a non-empty string
     let chars = text.split("");
