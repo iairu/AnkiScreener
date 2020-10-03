@@ -106,8 +106,8 @@ export async function exportSelections() {
         return;
     }
 
-    // obtain and prepare existing/new CSV data
-    let csv = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
+    // obtain and prepare existing/empty CSV data from saved file
+    let existingCSV = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
     
     // figure out how many rows there should be
     let maxShots = 0;
@@ -123,34 +123,33 @@ export async function exportSelections() {
     }
 
     // each shot defines a row, each group defines a column
-    let append = "";
+    let appendCSV = "";
     for(let row = 0; row < maxShots; row++) {
         for(let column = 0; column < groups.length; column++) {
             // add the shot into the column number g for row number i if it exists
             if (groups[column].children.length - 1 >= row) {
-                append += createCardEntry(groups[column].prefix, cropScreenshot(screenshotElm,groups[column].children[row]), groups[column].suffix);
+                appendCSV += createCardEntry(groups[column].prefix, cropScreenshot(screenshotElm,groups[column].children[row]), groups[column].suffix);
                 // prefix, suffix come from group entry, shot transform info is read from groups[column].children[row]
             }
 
             // end column if more follow else end row
             if (column < groups.length - 1) 
-                append += columnDelimiter;
+                appendCSV += columnDelimiter;
             else
-                append += rowDelimiter;
+                appendCSV += rowDelimiter;
         }
     }
 
     // add tags to each row except last empty line
     let tags = getTags();
     if (tags !== "") {
-        arr.pop();
-        arr.push("");
-        append = arr.join(rowDelimiter);
-        let a = append.split(rowDelimiter).map(row => row + columnDelimiter + "\"" + tags + "\"")
+        let a = appendCSV.split(rowDelimiter).map(row => row + columnDelimiter + "\"" + tags + "\"")
+        a.pop();
+        a.push("");
+        appendCSV = a.join(rowDelimiter);
     } 
 
-    notify((csv.length ? "Appended to" : "Created") + " the CSV table");
-    csv = csv + append;
+    notify((existingCSV.length ? "Appended to" : "Created") + " the CSV table");
 
     stopCapturing();
 }
