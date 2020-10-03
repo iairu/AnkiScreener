@@ -41,11 +41,13 @@ export const getScreenshotElm = ()=>{
     screenshotElm.subscribe(e => {elm = e})(); // unsub right after
     return elm;
 };
+
 export const notifications = writable([]);
-export const notify = (text, ms=2000)=>{ // settings for default ms
+export const notify = (text, isImgSrc=false, ms=2000)=>{ // settings for default ms
     notifications.update(n => {
         const ntf = {
             text: text,
+            isImgSrc: isImgSrc,
             ms: ms,
             onFinish: ()=>{removeNotification(ntf)}
         }

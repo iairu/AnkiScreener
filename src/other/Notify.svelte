@@ -10,7 +10,11 @@
 <notifications>
     {#each $notifications as notification}
         <note>
-            {onShow(notification) && notification.text}
+            {#if onShow(notification) && !notification.isImgSrc}
+                {notification.text}
+            {:else}
+                <img src={notification.text} alt="Notification">
+            {/if}
         </note>
     {/each}
 </notifications>
