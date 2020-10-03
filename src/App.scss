@@ -113,5 +113,8 @@ notifications {
         margin-bottom: 7px;
         font-family: sans-serif;
         white-space: pre;
+        max-width: 500px;
+        overflow: hidden;
+        img {max-height: 250px;}
     }
 }
