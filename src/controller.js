@@ -1,7 +1,8 @@
 const { remote } = require("electron");
-const screenshot = require("screenshot-desktop");
+const Screenshot = require("screenshot-desktop");
+const Clipper = require("image-clipper");
 import { guaranteeNewLine, readTextFile } from "./fsman";
-import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify } from "./store";
+import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify, getScreenshotElm } from "./store";
 
 
 
@@ -34,20 +35,32 @@ export function unregisterGlobalKeybinds() {
     remote.globalShortcut.unregisterAll();
 }
 
-// SCREENSHOT (captureScreenshot, clipScreenshot)
+
+
+// SCREENSHOT (captureScreenshot, cropScreenshot)
 
 export async function captureScreenshot() {
     // base64 image/jpeg
     screenshotStart();
-    return await screenshot().then(imgBuffer => {
+    return await Screenshot().then(imgBuffer => {
         screenshotDone();
         return imgBuffer.toString("base64");
     });
 }
 
-// todo: clipScreenshot() foreach shots -> image-clipper npm package -> shots[i].b64jpg = imgBuffer.toString("base64");
+function cropScreenshot(imgElm, shot) {
+    // element to base64 png
+    return Clipper(imgElm)
+    .crop(shot.x1, shot.y1, shot.x2 - shot.x1, shot.y2 - shot.y1)
+    .toDataURL((dataUrl)=>{
+        notify(dataUrl,true);
+        return dataUrl;
+    });
+}
 
-// EXPORT (saveDialog, exportSelections, captureScreenshot)
+
+
+// EXPORT (setSavePath, createCardEntry, exportSelections)
 
 export async function setSavePath() {
     let win = remote.getCurrentWindow();
@@ -77,6 +90,7 @@ export async function exportSelections() {
 
     const { groups, shots } = assignSelections();
     
+    // guarantee the user made groups and selections
     if (!shots.length) {
         notify("You don't have any selections.\nDrag left mouse button to make some.");
         return;
@@ -85,12 +99,14 @@ export async function exportSelections() {
         return;
     }
 
+    // guarantee that the user chose a save path
     let csvPath = getCsvPath();
     if (csvPath === "") {
         notify("No save path provided.");
         return;
     }
 
+    // obtain and prepare existing/new CSV data
     let csv = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
     
     // figure out how many rows there should be
@@ -99,15 +115,21 @@ export async function exportSelections() {
         maxShots = (group.children.length > maxShots) ? group.children.length : maxShots; 
     })
 
+    // get the screenshot element for further processing
+    let screenshotElm = getScreenshotElm();
+    if (screenshotElm === undefined) {
+        notify("Screenshot got stuck in the pipe. Maybe try again?");
+        return;
+    }
+
     // each shot defines a row, each group defines a column
     let append = "";
     for(let row = 0; row < maxShots; row++) {
         for(let column = 0; column < groups.length; column++) {
             // add the shot into the column number g for row number i if it exists
             if (groups[column].children.length - 1 >= row) {
-                append += createCardEntry(groups[column].prefix, groups[column].children[row].b64jpg, groups[column].suffix);
-                // prefix, suffix come from group entry
-                // b64jpg comes from shot entry
+                append += createCardEntry(groups[column].prefix, cropScreenshot(screenshotElm,groups[column].children[row]), groups[column].suffix);
+                // prefix, suffix come from group entry, shot transform info is read from groups[column].children[row]
             }
 
             // end column if more follow else end row
@@ -127,8 +149,8 @@ export async function exportSelections() {
         append = arr.join(rowDelimiter);
     } 
 
+    notify((csv.length ? "Appended to" : "Created") + " the CSV table");
     csv = csv + append;
-    notify(csv);
 
     stopCapturing();
 }
