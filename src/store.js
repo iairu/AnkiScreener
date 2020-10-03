@@ -34,6 +34,13 @@ export const getCsvPath = ()=>{
     return path;
 }
 
+export const screenshotElm = writable({});
+export const setScreenshotElm = (elm)=>{screenshotElm.set(elm)};
+export const getScreenshotElm = ()=>{
+    let elm = "";
+    screenshotElm.subscribe(e => {elm = e})(); // unsub right after
+    return elm;
+};
 export const notifications = writable([]);
 export const notify = (text, ms=2000)=>{ // settings for default ms
     notifications.update(n => {
