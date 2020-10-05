@@ -1,7 +1,7 @@
 const { remote } = require("electron");
 const Screenshot = require("screenshot-desktop");
 const Clipper = require("image-clipper");
-import { guaranteeNewLine, readTextFile, writeTextFile } from "./fsman";
+import { guaranteeNewLine, readTextFile, writeImgBase64File, writeTextFile } from "./fsman";
 import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify, getScreenshotElm } from "./store";
 
 
@@ -48,14 +48,23 @@ export async function captureScreenshot() {
     });
 }
 
-function cropScreenshot(imgElm, shot) {
-    // element to base64 png
-    return Clipper(imgElm)
+function cropSaveScreenshot(imgElm, shot, filePathBase, fileNameBase, pathDelimiter) {
+    let fileName = fileNameBase + "_" + Date.now() + "_" + Math.floor(Math.random()*10000) + ".png";
+    let filePath = filePathBase + pathDelimiter + fileName;
+    
+    // element to b64 png
+    let dataURL = Clipper(imgElm)
+    .quality(80)
     .crop(shot.x1, shot.y1, shot.x2 - shot.x1, shot.y2 - shot.y1)
-    .toDataURL((dataUrl)=>{
-        notify(dataUrl,true);
-        return dataUrl;
+    .toDataURL((dataURL)=>{
+        notify(dataURL,true);
+        return dataURL;
     });
+
+    // b64 png to file
+    writeImgBase64File(filePath,dataURL);
+
+    return fileName;
 }
 
 
@@ -100,6 +109,7 @@ function createCardEntry(prefix,imgPath,suffix) {
 export async function exportSelections() {
     const columnDelimiter = ";"; // settings
     const rowDelimiter = "\r\n"; // settings
+    const pathDelimiter = "/"; // settings
 
     const { groups, shots } = assignSelections();
     
@@ -119,6 +129,12 @@ export async function exportSelections() {
         return;
     }
 
+    // get different parts of the save path for later processing
+    let csvNameNoExt = shortPathFileName(csvPath);
+    let csvPathNoName = pathArray(csvPath);
+    csvPathNoName.pop();
+    csvPathNoName = csvPathNoName.join(pathDelimiter);
+    
     // obtain and prepare existing/empty CSV data from saved file
     let existingCSV = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
     
@@ -141,7 +157,17 @@ export async function exportSelections() {
         for(let column = 0; column < groups.length; column++) {
             // add the shot into the column number g for row number i if it exists
             if (groups[column].children.length - 1 >= row) {
-                appendCSV += createCardEntry(groups[column].prefix, cropScreenshot(screenshotElm,groups[column].children[row]), groups[column].suffix);
+                appendCSV += createCardEntry(
+                    groups[column].prefix, 
+                    cropSaveScreenshot(
+                        screenshotElm,
+                        groups[column].children[row],
+                        csvPathNoName,
+                        csvNameNoExt,
+                        pathDelimiter
+                    ), 
+                    groups[column].suffix
+                );
                 // prefix, suffix come from group entry, shot transform info is read from groups[column].children[row]
             }
 
