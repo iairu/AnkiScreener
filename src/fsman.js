@@ -29,6 +29,14 @@ export const writeTextFile = (path,contents)=>{
     }
 }
 
+export const writeImgBase64File = (path,base64String)=>{
+    // http://www.codeblocq.com/2016/04/Convert-a-base64-string-to-a-file-in-Node/
+    let base64Image = base64String.split(';base64,').pop();
+    return fs.writeFile(path, base64Image, {encoding: 'base64'}, function(err) {
+        return err;
+    });
+}
+
 export const guaranteeNewLine = (text,delimiters=["\r","\n"])=>{ // delimiters should be an array of chars
     // guarantees new line at the end of a non-empty string
     let chars = text.split("");
