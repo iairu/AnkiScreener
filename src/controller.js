@@ -62,6 +62,19 @@ function cropScreenshot(imgElm, shot) {
 
 // EXPORT (setSavePath, createCardEntry, exportSelections)
 
+export function pathArray(path) {
+    let tree = path.split("\\");
+    if (tree.length === 1) { // splitting didn't work because non-windows routes
+        tree = path.split("/");
+    }
+    return tree;
+}
+
+export function shortPathFileName(path) {
+    let tree = pathArray(path);
+    return tree[tree.length - 1].split(".anki.csv")[0];
+}
+
 export async function setSavePath() {
     let win = remote.getCurrentWindow();
     remote.dialog.showSaveDialog(win,{

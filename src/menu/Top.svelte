@@ -1,24 +1,16 @@
 <script>
-    import { exitApp, devTools, restartApp, setSavePath } from "../controller";
+    import { exitApp, devTools, restartApp, setSavePath, shortPathFileName } from "../controller";
     import { isDev, 
              isCapturing, startCapturing, stopCapturing,
              hasMenuHidden, hideMenu, showMenu,
              csvPath } from "../store";
-
-    function shortPath(path) {
-        let tree = path.split("\\");
-        if (tree.length === 1) { // splitting didn't work because non-windows routes
-            tree = path.split("/");
-        }
-        return tree[tree.length - 1].split(".anki.csv")[0];
-    }
 </script>
 
 <div id="top" class="buttonRow">
     <button aria-label="Exit the app" on:click={exitApp}>X</button>
     <button aria-label="Choose a CSV output" on:click={setSavePath}
             style="max-width: 75px; text-overflow: ellipsis; white-space: nowrap;">
-        {$csvPath ? ">> " + shortPath($csvPath) : "Save to"}
+        {$csvPath ? ">> " + shortPathFileName($csvPath) : "Save to"}
     </button>
 
 {#if !$isCapturing}
