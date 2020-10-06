@@ -59,7 +59,7 @@ export const removeNotification = (obj)=>{
     notifications.update(n => n.filter(_n => _n !== obj))
 }
 
-export const isQAmode = writable(false);
+export const isQAmode = writable(true);
 export const turnQAon = ()=>{isQAmode.set(true)}
 export const turnQAoff = ()=>{isQAmode.set(false)}
 export const getQAmode = ()=>{
