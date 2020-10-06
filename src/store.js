@@ -80,10 +80,10 @@ export const QAaffixes = writable({
 });
 export const setQAaffixes = (setter)=>{
     QAaffixes.update((qa)=>{
-        if (setter.question.prefix) qa.question.prefix = setter.question.prefix;
-        if (setter.question.suffix) qa.question.suffix = setter.question.suffix;
-        if (setter.answer.prefix) qa.answer.prefix = setter.answer.prefix;
-        if (setter.answer.suffix) qa.answer.suffix = setter.answer.suffix;
+        if (setter.question.prefix !== undefined) qa.question.prefix = setter.question.prefix;
+        if (setter.question.suffix !== undefined) qa.question.suffix = setter.question.suffix;
+        if (setter.answer.prefix !== undefined) qa.answer.prefix = setter.answer.prefix;
+        if (setter.answer.suffix !== undefined) qa.answer.suffix = setter.answer.suffix;
         return qa;
     })
 }
