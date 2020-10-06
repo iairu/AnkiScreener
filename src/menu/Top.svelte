@@ -3,11 +3,16 @@
     import { isDev, 
              isCapturing, startCapturing, stopCapturing,
              hasMenuHidden, hideMenu, showMenu,
-             csvPath } from "../store";
+             csvPath, turnQAon, turnQAoff, isQAmode} from "../store";
 </script>
 
 <div id="top" class="buttonRow">
     <button aria-label="Exit the app" on:click={exitApp}>X</button>
+    {#if !$isQAmode}
+        <button aria-label="Turn QA mode ON" on:click={turnQAon}>QA</button>
+    {:else}
+        <button aria-label="Turn QA mode OFF" on:click={turnQAoff}>G</button>
+    {/if}
     <button aria-label="Choose a CSV output" on:click={setSavePath}
             style="max-width: 75px; text-overflow: ellipsis; white-space: nowrap;">
         {$csvPath ? ">> " + shortPathFileName($csvPath) : "Save to"}

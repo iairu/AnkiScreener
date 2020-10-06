@@ -1,5 +1,5 @@
 <script>
-    import { createSelection, updateLastSelection, removeLastSelection, shots, groups } from "../store";
+    import { createSelection, updateLastSelection, removeLastSelection, shots, groups, isQAmode } from "../store";
     import { exportSelections } from "../controller";
 
     let isSelecting = false;
@@ -54,7 +54,7 @@
         {/each}
     </shots>
 
-    <groups>
+    <groups class:qa={$isQAmode}>
         {#each $groups as s, index}
             <group style={
                     "width:" + ((s.x2 - s.x1 > 0) ? s.x2 - s.x1 : 0) + "px;"

@@ -53,6 +53,13 @@ menu {
             margin-right: 5px;
         }
     }
+    dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid white;
+    }
 }
 
 selections {
@@ -72,6 +79,10 @@ selections {
         border: 4px solid blue; 
         z-index: 12;
         label {color: blue;}
+    }
+    groups.qa group {
+        border-color: lime;
+        label {color: lime;}
     }
     shot, group {
         position: absolute;
