@@ -62,7 +62,7 @@
                 + " left: "  + s.x1 + "px;"
                 + " top:"    + s.y1 + "px;"
             }>
-                <label for="group">{"(" + (index + 1) + ") " + s.name}</label>
+                <label for="group">{index + 1}</label>
             </group>
         {/each}
     </groups>
