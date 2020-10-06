@@ -2,7 +2,7 @@ const { remote } = require("electron");
 const Screenshot = require("screenshot-desktop");
 const Clipper = require("image-clipper");
 import { guaranteeNewLine, readTextFile, writeImgBase64File, writeTextFile } from "./fsman";
-import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify, getScreenshotElm } from "./store";
+import { assignSelections, screenshotDone, screenshotStart, startCapturing, stopCapturing, getCsvPath, setCsvPath, getTags, notify, getScreenshotElm, getQAmode, getQAaffixes } from "./store";
 
 
 
@@ -190,7 +190,8 @@ export async function exportSelections() {
     const rowDelimiter = "\r\n"; // settings
     const pathDelimiter = "/"; // settings
 
-    const { groups, shots } = assignSelections();
+    const QA = getQAmode();
+    const { groups, shots } = assignSelections(QA);
     
     // guarantee the user made groups and selections
     if (!shots.length) {
@@ -224,9 +225,10 @@ export async function exportSelections() {
         return;
     }
 
-    // todo: generate CSV depending on whether QA (questions&answers) mode is active
-    let appendCSV = createCSV(groups, screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter);
-    // let appendCSV = createCSVQA(shots, groups, getQAaffixes(), screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter);
+    // generate different CSV depending on whether QA (questions&answers) mode is active
+    let appendCSV = QA ? 
+    createCSVQA(shots, groups, getQAaffixes(), screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter) : 
+    createCSV(groups, screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter);
 
     // add tags to each row except last empty line
     let tags = getTags();

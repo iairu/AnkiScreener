@@ -59,8 +59,39 @@ export const removeNotification = (obj)=>{
     notifications.update(n => n.filter(_n => _n !== obj))
 }
 
-// todo: isQAmode = false, on, off, get
-// todo: QAaffixes = {question:{prefix,suffix},answer:{prefix,suffix}}, set, get
+export const isQAmode = writable(false);
+export const turnQAon = ()=>{isQAmode.set(true)}
+export const turnQAoff = ()=>{isQAmode.set(false)}
+export const getQAmode = ()=>{
+    let mode;
+    isQAmode.subscribe(qa => mode = qa)(); // () to unsub right afterwards
+    return mode;
+}
+
+export const QAaffixes = writable({
+    question: {
+        prefix: "",
+        suffix: ""
+    },
+    answer: {
+        prefix: "",
+        suffix: ""
+    }
+});
+export const setQAaffixes = (setter)=>{
+    QAaffixes.update((qa)=>{
+        if (setter.question.prefix) qa.question.prefix = setter.question.prefix;
+        if (setter.question.suffix) qa.question.suffix = setter.question.suffix;
+        if (setter.answer.prefix) qa.answer.prefix = setter.answer.prefix;
+        if (setter.answer.suffix) qa.answer.suffix = setter.answer.suffix;
+        return qa;
+    })
+}
+export const getQAaffixes = ()=>{
+    let affixes;
+    QAaffixes.subscribe(qa => affixes = qa)(); // () to unsub right afterwards
+    return affixes;
+}
 
 export const groups = writable([]);
 export const shots = writable([]);
@@ -101,21 +132,23 @@ export const resetSelections = ()=>{
     groups.set([]);
     shots.set([]);
 }
-export const assignSelections = ()=>{ // todo qa arg that skips foreach loop
+export const assignSelections = (skipAssignments=false)=>{
     let _groups;
     let _shots;
     groups.subscribe(c => _groups = c)(); // () to unsub right afterwards
     shots.subscribe(c => _shots = c)(); // ^^^
 
-    _groups.forEach((group) => {
-    _shots.forEach((shot) => {
-        if (shot.x1 >= group.x1 && shot.x2 <= group.x2 && 
-            shot.y1 >= group.y1 && shot.y2 <= group.y2) {
-            group.children.push(shot);
-            shot.parent = group;
-        }
-    })
-    }) // todo: there may be a problem with groups not being in order
+    if (!skipAssignments) {
+        _groups.forEach((group) => {
+        _shots.forEach((shot) => {
+            if (shot.x1 >= group.x1 && shot.x2 <= group.x2 && 
+                shot.y1 >= group.y1 && shot.y2 <= group.y2) {
+                group.children.push(shot);
+                shot.parent = group;
+            }
+        })
+        }) // todo: there may be a problem with groups not being in order
+    }
 
     return {groups: _groups, shots: _shots};
 }
