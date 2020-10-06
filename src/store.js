@@ -59,6 +59,9 @@ export const removeNotification = (obj)=>{
     notifications.update(n => n.filter(_n => _n !== obj))
 }
 
+// todo: isQAmode = false, on, off, get
+// todo: QAaffixes = {question:{prefix,suffix},answer:{prefix,suffix}}, set, get
+
 export const groups = writable([]);
 export const shots = writable([]);
 
@@ -98,7 +101,7 @@ export const resetSelections = ()=>{
     groups.set([]);
     shots.set([]);
 }
-export const assignSelections = ()=>{
+export const assignSelections = ()=>{ // todo qa arg that skips foreach loop
     let _groups;
     let _shots;
     groups.subscribe(c => _groups = c)(); // () to unsub right afterwards

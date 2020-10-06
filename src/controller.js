@@ -106,6 +106,85 @@ function createCardEntry(prefix,imgPath,suffix) {
     return "\"" + (prefix ? prefix + "<br>" : "") + "<img src=\'" + imgPath + "\'>" + (suffix ? "<br>" + suffix : "") + "\"";
 }
 
+function createCSV(groups,screenshotElm,csvPathNoName,csvNameNoExt,pathDelimiter,columnDelimiter,rowDelimiter) {
+    // figure out how many rows there should be
+    let maxShots = 0;
+    groups.forEach(group => {
+        maxShots = (group.children.length > maxShots) ? group.children.length : maxShots; 
+    })
+    
+    // each shot defines a row, each group defines a column
+    let csv = "";
+    for(let row = 0; row < maxShots; row++) {
+        for(let column = 0; column < groups.length; column++) {
+            // add the shot into the column number g for row number i if it exists
+            if (groups[column].children.length - 1 >= row) {
+                csv += createCardEntry(
+                    groups[column].prefix, 
+                    cropSaveScreenshot(
+                        screenshotElm,
+                        groups[column].children[row],
+                        csvPathNoName,
+                        csvNameNoExt,
+                        pathDelimiter
+                    ), 
+                    groups[column].suffix
+                );
+                // prefix, suffix come from group entry, shot transform info is read from groups[column].children[row]
+            }
+
+            // end column if more follow else end row
+            if (column < groups.length - 1) 
+                csv += columnDelimiter;
+            else
+                csv += rowDelimiter;
+        }
+    }
+
+    return csv;
+}
+
+function createCSVQA(questions,answers,affixes,screenshotElm,csvPathNoName,csvNameNoExt,pathDelimiter,columnDelimiter,rowDelimiter) {
+    // each question defines a row & column, each answer defines a second column
+    let csv = "";
+    for(let row = 0; row < questions.length; row++) {
+        // add question column
+        csv += createCardEntry(
+            affixes.question.prefix, 
+            cropSaveScreenshot(
+                screenshotElm,
+                questions[row],
+                csvPathNoName,
+                csvNameNoExt,
+                pathDelimiter
+            ), 
+            affixes.question.suffix
+        );
+
+        if (answers.length > row) {
+            // end prev. column 
+            csv += columnDelimiter;
+            // add answer column
+            csv += createCardEntry(
+                affixes.answer.prefix, 
+                cropSaveScreenshot(
+                    screenshotElm,
+                    answers[row],
+                    csvPathNoName,
+                    csvNameNoExt,
+                    pathDelimiter
+                ), 
+                affixes.answer.suffix
+            );
+        }
+
+        // end row
+        csv += rowDelimiter;
+    }
+
+    return csv;
+}
+
 export async function exportSelections() {
     const columnDelimiter = ";"; // settings
     const rowDelimiter = "\r\n"; // settings
@@ -137,12 +216,6 @@ export async function exportSelections() {
     
     // obtain and prepare existing/empty CSV data from saved file
     let existingCSV = guaranteeNewLine(readTextFile(csvPath),rowDelimiter.split(""));
-    
-    // figure out how many rows there should be
-    let maxShots = 0;
-    groups.forEach(group => {
-        maxShots = (group.children.length > maxShots) ? group.children.length : maxShots; 
-    })
 
     // get the screenshot element for further processing
     let screenshotElm = getScreenshotElm();
@@ -151,33 +224,9 @@ export async function exportSelections() {
         return;
     }
 
-    // each shot defines a row, each group defines a column
-    let appendCSV = "";
-    for(let row = 0; row < maxShots; row++) {
-        for(let column = 0; column < groups.length; column++) {
-            // add the shot into the column number g for row number i if it exists
-            if (groups[column].children.length - 1 >= row) {
-                appendCSV += createCardEntry(
-                    groups[column].prefix, 
-                    cropSaveScreenshot(
-                        screenshotElm,
-                        groups[column].children[row],
-                        csvPathNoName,
-                        csvNameNoExt,
-                        pathDelimiter
-                    ), 
-                    groups[column].suffix
-                );
-                // prefix, suffix come from group entry, shot transform info is read from groups[column].children[row]
-            }
-
-            // end column if more follow else end row
-            if (column < groups.length - 1) 
-                appendCSV += columnDelimiter;
-            else
-                appendCSV += rowDelimiter;
-        }
-    }
+    // todo: generate CSV depending on whether QA (questions&answers) mode is active
+    let appendCSV = createCSV(groups, screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter);
+    // let appendCSV = createCSVQA(shots, groups, getQAaffixes(), screenshotElm, csvPathNoName, csvNameNoExt, pathDelimiter, columnDelimiter, rowDelimiter);
 
     // add tags to each row except last empty line
     let tags = getTags();
