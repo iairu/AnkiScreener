@@ -70,29 +70,31 @@ selections {
     right: 0;
     top: 0;
     bottom: 0;
-    shot {
-        border: 4px solid red; 
-        z-index: 11;
-        label {color: red;}
-    }
-    group {
-        border: 4px solid blue; 
-        z-index: 12;
-        label {color: blue;}
-    }
-    groups.qa group {
-        border-color: lime;
-        label {color: lime;}
-    }
     shot, group {
         position: absolute;
         display: block;
+        border: 4px solid;
+        margin: -3px; // because border
         label {
             font-size: 22px;
             font-weight: bold;
             font-family: sans-serif;
             pointer-events: none;
         }
+    }
+    shot {
+        z-index: 11;
+        border-color: red; 
+        label {color: red;}
+    }
+    group {
+        z-index: 12;
+        border-color: blue; 
+        label {color: blue;}
+    }
+    groups.qa group {
+        border-color: lime;
+        label {color: lime;}
     }
 }
 
